@@ -20,7 +20,7 @@ function hasRole(role) {
 // Logout user
 function logout() {
   localStorage.removeItem('currentUser');
-  window.location.href = 'index.html';
+  window.location.href = '/pages/index.html';
 }
 
 // Protect page - redirect to login if not authenticated
@@ -29,7 +29,7 @@ function protectPage(requiredRole = null) {
   
   if (!user) {
     // Not logged in, redirect to login
-    window.location.href = 'login.html';
+    window.location.href = '/pages/login.html';
     return false;
   }
   
@@ -37,19 +37,19 @@ function protectPage(requiredRole = null) {
     // Wrong role, redirect to appropriate dashboard
     switch(user.role) {
       case 'farmer':
-        window.location.href = 'farmer-dashboard.html';
+        window.location.href = '/pages/farmer-dashboard.html';
         break;
       case 'consumer':
-        window.location.href = 'consumer-dashboard.html';
+        window.location.href = '/pages/consumer-dashboard.html';
         break;
       case 'supplier':
-        window.location.href = 'supplier-dashboard.html';
+        window.location.href = '/pages/supplier-dashboard.html';
         break;
       case 'expert':
-        window.location.href = 'expert-dashboard.html';
+        window.location.href = '/pages/expert-dashboard.html';
         break;
       default:
-        window.location.href = 'index.html';
+        window.location.href = '/pages/index.html';
     }
     return false;
   }
@@ -77,7 +77,7 @@ function displayUserInfo(containerId = 'user-info') {
 }
 
 // Handle account creation
-function handleCreateAccount(event) {
+async function handleCreateAccount(event) {
     event.preventDefault();
 
     const username = document.getElementById('username').value.trim();
@@ -90,27 +90,27 @@ function handleCreateAccount(event) {
         return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    try {
+        const response = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email, password, role }),
+        });
 
-    if (users.some(user => user.email === email)) {
-        alert('An account with this email already exists!');
-        return;
+        const data = await response.json();
+
+        if (response.ok) {
+            alert(data.message + ' You can now log in.');
+            window.location.href = '/pages/login.html';
+        } else {
+            alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error during registration:', error);
+        alert('An unexpected error occurred. Please try again.');
     }
-
-    const newUser = {
-        id: Date.now(),
-        username,
-        email,
-        password,
-        role,
-        createdAt: new Date().toISOString()
-    };
-
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    alert('Account created successfully! You can now log in.');
-    window.location.href = 'login.html';
 }
 
 // Initialize dashboard (call this on dashboard pages)

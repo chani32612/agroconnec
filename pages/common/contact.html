@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Contact Us</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; }
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .contact-info p { margin-bottom: 10px; }
+    .contact-info a { color: var(--green); text-decoration: none; }
+    .contact-info a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <h1 style="margin:10px 0 6px;">Contact Us</h1>
+    <div class="contact-info">
+      <p>Have questions or feedback? We'd love to hear from you!</p>
+      <p>Email: <a href="mailto:support@agroconnect.com">support@agroconnect.com</a></p>
+      <p>Phone: +1 (555) 123-4567</p>
+      <p>Address: 123 Farm Lane, Agri-City, AG 12345</p>
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      // No specific protection needed for a public 'Contact Us' page
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – User Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; } 
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .admin-card { background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 2px 8px #17741014; margin-top: 20px; }
+    .admin-card h1 { margin-top: 0; color: var(--green); }
+    .user-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    .user-table th, .user-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    .user-table th { background-color: var(--green); color: white; }
+    .user-table tr:nth-child(even) { background-color: #f2f2f2; }
+    .action-buttons button { background: #408a46; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 0.9em; margin-right: 5px; }
+    .action-buttons button.delete { background: #dc3545; }
+    .action-buttons button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <div class="admin-card">
+      <h1>User Management</h1>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Alice Smith</td>
+            <td>alice@example.com</td>
+            <td>Consumer</td>
+            <td>Active</td>
+            <td class="action-buttons">
+              <button>Edit</button>
+              <button class="delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Bob Johnson</td>
+            <td>bob@example.com</td>
+            <td>Farmer</td>
+            <td>Active</td>
+            <td class="action-buttons">
+              <button>Edit</button>
+              <button class="delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Charlie Brown</td>
+            <td>charlie@example.com</td>
+            <td>Expert</td>
+            <td>Pending</td>
+            <td class="action-buttons">
+              <button>Edit</button>
+              <button>Approve</button>
+              <button class="delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Diana Prince</td>
+            <td>diana@example.com</td>
+            <td>Supplier</td>
+            <td>Active</td>
+            <td class="action-buttons">
+              <button>Edit</button>
+              <button class="delete">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!protectPage('admin')) return;
+      await loadUserDataForAdmin();
+      // In a real application, fetch and display actual user data here
+    });
+  </script>
+</body>
+</html>

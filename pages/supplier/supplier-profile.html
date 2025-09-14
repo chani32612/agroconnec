@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Supplier Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; } 
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .profile-card { background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 2px 8px #17741014; margin-top: 20px; text-align: center; }
+    .profile-card h1 { margin-top: 0; color: var(--green); }
+    .profile-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--accent); }
+    .profile-info p { font-size: 1.1em; line-height: 1.6; margin-bottom: 10px; }
+    .profile-info strong { color: var(--accent); }
+    .inventory-section { margin-top: 40px; text-align: left; }
+    .inventory-section h2 { color: var(--green); border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 20px; }
+    .item-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .item-card { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #17741014; overflow: hidden; }
+    .item-card img { width: 100%; height: 200px; object-fit: cover; }
+    .item-card-info { padding: 15px; }
+    .item-card-info h3 { margin-top: 0; color: var(--green); }
+    .item-card-info p { margin-bottom: 5px; font-size: 0.95em; }
+    .item-card-info .price { font-size: 1.2em; font-weight: 600; color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <div class="profile-card">
+      <img src="https://via.placeholder.com/150" alt="Supplier Avatar" class="profile-avatar">
+      <h1>AgroSupply Co.</h1>
+      <div class="profile-info">
+        <p><strong>Location:</strong> Industrial Park, TX</p>
+        <p><strong>Specialty:</strong> Farm Equipment & Supplies</p>
+        <p><strong>About:</strong> AgroSupply Co. is a leading provider of high-quality agricultural equipment, seeds, fertilizers, and other farm necessities. We are committed to supporting farmers with reliable products and excellent service.</p>
+        <p><strong>Contact:</strong> info@agrosupply.com</p>
+      </div>
+    </div>
+
+    <div class="inventory-section">
+      <h2>Our Inventory</h2>
+      <div class="item-grid">
+        <div class="item-card">
+          <img src="https://via.placeholder.com/300x200" alt="Organic Fertilizer">
+          <div class="item-card-info">
+            <h3>Organic Fertilizer</h3>
+            <p>Premium blend for healthy soil and robust crops.</p>
+            <p class="price">$45.00 / bag</p>
+          </div>
+        </div>
+        <div class="item-card">
+          <img src="https://via.placeholder.com/300x200" alt="Irrigation System">
+          <div class="item-card-info">
+            <h3>Drip Irrigation System</h3>
+            <p>Efficient water delivery for all farm sizes.</p>
+            <p class="price">$250.00 / set</p>
+          </div>
+        </div>
+        <div class="item-card">
+          <img src="https://via.placeholder.com/300x200" alt="Gardening Tools">
+          <div class="item-card-info">
+            <h3>Deluxe Gardening Tool Set</h3>
+            <p>Durable tools for every farming task.</p>
+            <p class="price">$75.00 / set</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      // This page is public, so no protectPage call needed unless specific supplier data is loaded
+      // If dynamic supplier data is to be loaded based on URL, you'd fetch it here
+      // Example: const urlParams = new URLSearchParams(window.location.search);
+      // const supplierId = urlParams.get('id');
+      // if (supplierId) { fetchSupplierData(supplierId); }
+    });
+  </script>
+</body>
+</html>

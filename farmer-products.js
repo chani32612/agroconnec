@@ -332,7 +332,7 @@ function displayFarmerUserInfo() {
 function checkFarmerAuthentication() {
   const user = getCurrentUser();
   if (!user) {
-    window.location.href = 'login.html';
+    window.location.href = '/pages/login.html';
     return false;
   }
   
@@ -340,16 +340,16 @@ function checkFarmerAuthentication() {
     // Redirect to appropriate dashboard based on role
     switch(user.role) {
       case 'consumer':
-        window.location.href = 'consumer-dashboard.html';
+        window.location.href = '/pages/consumer-dashboard.html';
         break;
       case 'supplier':
-        window.location.href = 'supplier-dashboard.html';
+        window.location.href = '/pages/supplier-dashboard.html';
         break;
       case 'expert':
-        window.location.href = 'expert-dashboard.html';
+        window.location.href = '/pages/expert-dashboard.html';
         break;
       default:
-        window.location.href = 'login.html';
+        window.location.href = '/pages/login.html';
     }
     return false;
   }

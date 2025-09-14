@@ -66,7 +66,7 @@ function initLogoutButtons() {
       } else {
         // Fallback: clear and go home
         localStorage.removeItem('currentUser');
-        window.location.href = '/login.html';
+        window.location.href = '/pages/login.html';
       }
     });
   });

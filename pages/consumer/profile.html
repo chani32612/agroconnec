@@ -113,7 +113,7 @@
       showConsumerNotification('Profile saved','success');
     }
 
-    function deleteAccount(){ if(!confirm('Delete your account? This cannot be undone.')) return; const user=getCurrentUser(); if(!user) return; localStorage.removeItem('currentUser'); alert('Account deleted (demo).'); window.location.href='/index.html'; }
+    function deleteAccount(){ if(!confirm('Delete your account? This cannot be undone.')) return; const user=getCurrentUser(); if(!user) return; localStorage.removeItem('currentUser'); alert('Account deleted (demo).'); window.location.href = '/pages/login.html'; }
 
     document.addEventListener('DOMContentLoaded', function(){ if(!protectPage('consumer')) return; loadProfile(); });
   </script>

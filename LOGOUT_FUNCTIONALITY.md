@@ -83,7 +83,7 @@ function handleLogout() {
     localStorage.removeItem('currentUser');
     showConsumerNotification('Logged out successfully!', 'success');
     setTimeout(() => {
-      window.location.href = 'login.html';
+      window.location.href = '/pages/login.html';
     }, 1500);
   }
 }
@@ -92,7 +92,7 @@ function handleLogout() {
 function displayUserInfo() {
   const user = getCurrentUser();
   if (!user) {
-    window.location.href = 'login.html';
+    window.location.href = '/pages/login.html';
     return;
   }
   // Update UI with user information
@@ -117,7 +117,7 @@ function handleLogout() {
     localStorage.removeItem('currentUser');
     showNotification('Logged out successfully!', 'success');
     setTimeout(() => {
-      window.location.href = 'login.html';
+      window.location.href = '/pages/login.html';
     }, 1500);
   }
 }
@@ -126,7 +126,7 @@ function handleLogout() {
 function displayFarmerUserInfo() {
   const user = getCurrentUser();
   if (!user) {
-    window.location.href = 'login.html';
+    window.location.href = '/pages/login.html';
     return;
   }
   // Update sidebar and welcome section

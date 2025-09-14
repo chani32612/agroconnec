@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Article Editor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; } 
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .article-form-card { background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 2px 8px #17741014; }
+    .article-form-card h1 { margin-top: 0; color: var(--green); }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+    .form-group input[type="text"], .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1.5px solid #86b691;
+      border-radius: 8px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    .form-group textarea { min-height: 200px; resize: vertical; }
+    .submit-btn { background:#408a46;color:#fff;border:none;padding:12px 25px;border-radius:9px;font-size:1.1em;cursor:pointer;font-weight:600; margin-top: 20px; }
+    .submit-btn:hover { background: #336d38; }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <div class="article-form-card">
+      <h1>Create/Edit Article</h1>
+      <form>
+        <div class="form-group">
+          <label for="articleTitle">Article Title:</label>
+          <input type="text" id="articleTitle" name="articleTitle" required>
+        </div>
+        <div class="form-group">
+          <label for="articleContent">Article Content:</label>
+          <textarea id="articleContent" name="articleContent" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="articleTags">Tags (comma-separated):</label>
+          <input type="text" id="articleTags" name="articleTags">
+        </div>
+        <button type="submit" class="submit-btn">Save Article</button>
+      </form>
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!protectPage('expert')) return;
+      await loadUserDataForExpert();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const articleId = urlParams.get('id');
+
+      if (articleId) {
+        // In a real application, fetch article details to pre-fill the form for editing
+        document.querySelector('h1').textContent = 'Edit Article';
+        // Example: populate form fields with fetched data
+        // document.getElementById('articleTitle').value = 'Fetched Article Title';
+      }
+
+      document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = {
+          title: document.getElementById('articleTitle').value,
+          content: document.getElementById('articleContent').value,
+          tags: document.getElementById('articleTags').value.split(',').map(tag => tag.trim())
+        };
+        console.log('Saving article:', formData);
+        alert('Article saved successfully! (This is a demo)');
+        // In a real app, send this data to your server to add or update the article
+      });
+    });
+  </script>
+</body>
+</html>

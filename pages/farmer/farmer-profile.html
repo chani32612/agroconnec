@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Farmer Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; } 
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .profile-card { background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 2px 8px #17741014; margin-top: 20px; text-align: center; }
+    .profile-card h1 { margin-top: 0; color: var(--green); }
+    .profile-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--accent); }
+    .profile-info p { font-size: 1.1em; line-height: 1.6; margin-bottom: 10px; }
+    .profile-info strong { color: var(--accent); }
+    .products-section { margin-top: 40px; text-align: left; }
+    .products-section h2 { color: var(--green); border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 20px; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .product-item { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #17741014; overflow: hidden; }
+    .product-item img { width: 100%; height: 200px; object-fit: cover; }
+    .product-item-info { padding: 15px; }
+    .product-item-info h3 { margin-top: 0; color: var(--green); }
+    .product-item-info p { margin-bottom: 5px; font-size: 0.95em; }
+    .product-item-info .price { font-size: 1.2em; font-weight: 600; color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <div class="profile-card">
+      <img src="https://via.placeholder.com/150" alt="Farmer Avatar" class="profile-avatar">
+      <h1>Farmer John's Farm</h1>
+      <div class="profile-info">
+        <p><strong>Location:</strong> Rural Valley, CA</p>
+        <p><strong>Specialty:</strong> Organic Vegetables & Fruits</p>
+        <p><strong>About:</strong> Farmer John has been cultivating fresh, organic produce for over 30 years. His farm is dedicated to sustainable practices and delivering the highest quality goods directly to your table.</p>
+        <p><strong>Contact:</strong> farmerjohn@example.com</p>
+      </div>
+    </div>
+
+    <div class="products-section">
+      <h2>Products from Farmer John</h2>
+      <div class="product-grid">
+        <div class="product-item">
+          <img src="https://via.placeholder.com/300x200" alt="Organic Carrots">
+          <div class="product-item-info">
+            <h3>Organic Carrots</h3>
+            <p>Freshly harvested, sweet and crunchy.</p>
+            <p class="price">$3.50 / kg</p>
+          </div>
+        </div>
+        <div class="product-item">
+          <img src="https://via.placeholder.com/300x200" alt="Heirloom Tomatoes">
+          <div class="product-item-info">
+            <h3>Heirloom Tomatoes</h3>
+            <p>Variety of colors and rich flavors.</p>
+            <p class="price">$4.00 / lb</p>
+          </div>
+        </div>
+        <div class="product-item">
+          <img src="https://via.placeholder.com/300x200" alt="Farm Fresh Eggs">
+          <div class="product-item-info">
+            <h3>Farm Fresh Eggs</h3>
+            <p>Pasture-raised, large brown eggs.</p>
+            <p class="price">$6.00 / dozen</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      // This page is public, so no protectPage call needed unless specific farmer data is loaded
+      // If dynamic farmer data is to be loaded based on URL, you'd fetch it here
+      // Example: const urlParams = new URLSearchParams(window.location.search);
+      // const farmerId = urlParams.get('id');
+      // if (farmerId) { fetchFarmerData(farmerId); }
+    });
+  </script>
+</body>
+</html>

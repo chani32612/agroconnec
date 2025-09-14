@@ -2,58 +2,27 @@
 // This file handles displaying farmer products to consumers
 
 // Get all farmer products from all farmers
-function getAllFarmerProducts() {
-  const allProducts = [];
-  
-  // Get all users from dataa.json to find farmers
-  const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-  
-  // If we have user data, get farmer IDs
-  if (userData.users) {
-    const farmers = userData.users.filter(user => user.role === 'farmer');
-    
-    farmers.forEach(farmer => {
-      const farmerProducts = localStorage.getItem(`farmer_products_${farmer.id}`);
-      if (farmerProducts) {
-        const products = JSON.parse(farmerProducts);
-        // Add farmer info to each product
-        products.forEach(product => {
-          const farmerDetails = userData.farmers?.find(f => f.user_id === farmer.id);
-          product.farmer_name = farmerDetails?.full_name || farmer.username;
-          product.farmer_location = farmerDetails?.location || 'Unknown';
-        });
-        allProducts.push(...products);
-      }
-    });
-  }
-  
-  // Also check for any products in localStorage without specific farmer association
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('farmer_products_')) {
-      const farmerId = key.replace('farmer_products_', '');
-      // Skip if we already processed this farmer
-      if (!userData.users || !userData.users.find(u => u.id == farmerId)) {
-        const products = JSON.parse(localStorage.getItem(key) || '[]');
-        products.forEach(product => {
-          product.farmer_name = `Farmer ${farmerId}`;
-          product.farmer_location = 'Unknown';
-        });
-        allProducts.push(...products);
-      }
+async function getAllFarmerProducts() {
+  try {
+    const response = await fetch('/api/products');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const products = await response.json();
+    // Filter only available products
+    return products.filter(product => product.status === 'available');
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
   }
-  
-  // Filter only available products
-  return allProducts.filter(product => product.status === 'available');
 }
 
 // Display products in consumer dashboard
-function displayProductsForConsumers() {
+async function displayProductsForConsumers() {
   const productsContainer = document.querySelector('.products-row');
   if (!productsContainer) return;
   
-  const products = getAllFarmerProducts();
+  const products = await getAllFarmerProducts();
   
   if (products.length === 0) {
     productsContainer.innerHTML = `
@@ -69,7 +38,7 @@ function displayProductsForConsumers() {
   products.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   
   productsContainer.innerHTML = products.map(product => `
-    <div class="product-card" data-product-id="${product.id}" data-farmer-id="${product.farmer_id}">
+    <div class="product-card" data-product-id="${product._id}" data-farmer-id="${product.farmer_id}">
       <img src="${product.image_url || 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=300&h=200&fit=crop'}" 
            alt="${product.name}" 
            onerror="this.src='https://images.unsplash.com/photo-1560493676-04071c5f467b?w=300&h=200&fit=crop'"/>
@@ -87,14 +56,14 @@ function displayProductsForConsumers() {
         </div>
         ${product.organic ? '<div style="font-size: 0.75em; color: #4CAE4E; font-weight: 600; margin-top: 4px;">🌱 Organic</div>' : ''}
       </div>
-      <button class="add-btn" onclick="addToCart(${product.id}, ${product.farmer_id})">+ Add to Cart</button>
+      <button class="add-btn" onclick="addToCart('${product._id}', ${product.farmer_id})">+ Add to Cart</button>
     </div>
   `).join('');
 }
 
 // Filter products by category
-function filterProductsByCategory(category) {
-  const products = getAllFarmerProducts();
+async function filterProductsByCategory(category) {
+  const products = await getAllFarmerProducts();
   const filteredProducts = category === 'all' ? products : products.filter(p => 
     p.category.toLowerCase() === category.toLowerCase()
   );
@@ -118,7 +87,7 @@ function displayFilteredProducts(products) {
   }
   
   productsContainer.innerHTML = products.map(product => `
-    <div class="product-card" data-product-id="${product.id}" data-farmer-id="${product.farmer_id}">
+    <div class="product-card" data-product-id="${product._id}" data-farmer-id="${product.farmer_id}">
       <img src="${product.image_url || 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=300&h=200&fit=crop'}" 
            alt="${product.name}" 
            onerror="this.src='https://images.unsplash.com/photo-1560493676-04071c5f467b?w=300&h=200&fit=crop'"/>
@@ -136,14 +105,14 @@ function displayFilteredProducts(products) {
         </div>
         ${product.organic ? '<div style="font-size: 0.75em; color: #4CAE4E; font-weight: 600; margin-top: 4px;">🌱 Organic</div>' : ''}
       </div>
-      <button class="add-btn" onclick="addToCart(${product.id}, ${product.farmer_id})">+ Add to Cart</button>
+      <button class="add-btn" onclick="addToCart('${product._id}', ${product.farmer_id})">+ Add to Cart</button>
     </div>
   `).join('');
 }
 
 // Search products
-function searchProducts(searchTerm) {
-  const products = getAllFarmerProducts();
+async function searchProducts(searchTerm) {
+  const products = await getAllFarmerProducts();
   const filteredProducts = products.filter(product => 
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -161,10 +130,10 @@ function searchProducts(searchTerm) {
 }
 
 // Add to cart functionality (placeholder)
-function addToCart(productId, farmerId) {
+async function addToCart(productId, farmerId) {
   // Get the product details
-  const farmerProducts = JSON.parse(localStorage.getItem(`farmer_products_${farmerId}`) || '[]');
-  const product = farmerProducts.find(p => p.id === productId);
+  const products = await getAllFarmerProducts();
+  const product = products.find(p => p._id === productId);
   
   if (!product) {
     showConsumerNotification('Product not found!', 'error');
@@ -314,7 +283,7 @@ function displayUserInfo() {
 function checkAuthentication() {
   const user = getCurrentUser();
   if (!user) {
-    window.location.href = 'login.html';
+    window.location.href = '/pages/login.html';
     return false;
   }
   
@@ -322,16 +291,16 @@ function checkAuthentication() {
     // Redirect to appropriate dashboard based on role
     switch(user.role) {
       case 'farmer':
-        window.location.href = 'farmer-dashboard.html';
+        window.location.href = '/pages/farmer-dashboard.html';
         break;
       case 'supplier':
-        window.location.href = 'supplier-dashboard.html';
+        window.location.href = '/pages/supplier-dashboard.html';
         break;
       case 'expert':
-        window.location.href = 'expert-dashboard.html';
+        window.location.href = '/pages/expert-dashboard.html';
         break;
       default:
-        window.location.href = 'login.html';
+        window.location.href = '/pages/login.html';
     }
     return false;
   }
@@ -343,7 +312,7 @@ function checkAuthentication() {
 document.addEventListener('DOMContentLoaded', async function() {
   const currentPage = window.location.pathname.split('/').pop();
   
-  if (currentPage === 'consumer-dashboard.html') {
+  if (currentPage === 'consumer-dashboard.html' || currentPage === 'catalog.html') {
     // Check authentication first
     if (!checkAuthentication()) {
       return;
@@ -352,8 +321,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Display user information
     displayUserInfo();
     
-    // Load user data first
-    await loadUserDataForConsumer();
+    // Load user data first (no longer needed as products are fetched from API)
+    // await loadUserDataForConsumer();
     
     // Display products
     displayProductsForConsumers();
@@ -363,13 +332,13 @@ document.addEventListener('DOMContentLoaded', async function() {
     const searchInput = searchForm?.querySelector('input');
     
     if (searchForm && searchInput) {
-      searchForm.addEventListener('submit', function(e) {
+      searchForm.addEventListener('submit', async function(e) { // Made async
         e.preventDefault();
         const searchTerm = searchInput.value.trim();
         if (searchTerm) {
-          searchProducts(searchTerm);
+          await searchProducts(searchTerm); // Await searchProducts
         } else {
-          displayProductsForConsumers();
+          await displayProductsForConsumers(); // Await displayProductsForConsumers
           const heading = document.querySelector('h3');
           if (heading) {
             heading.textContent = 'Featured Products';
@@ -381,7 +350,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Set up category filtering
     const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
-      card.addEventListener('click', function() {
+      card.addEventListener('click', async function() { // Made async
         const categoryText = this.textContent.trim();
         let category = 'all';
         
@@ -390,7 +359,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         else if (categoryText.includes('Dairy')) category = 'Dairy';
         else if (categoryText.includes('Grains')) category = 'Grains';
         
-        filterProductsByCategory(category);
+        await filterProductsByCategory(category); // Await filterProductsByCategory
         
         // Update heading
         const heading = document.querySelector('h3');

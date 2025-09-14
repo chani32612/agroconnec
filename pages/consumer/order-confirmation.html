@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Order Confirmation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; } 
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .confirmation-card { background: #fff; padding: 40px; border-radius: 14px; box-shadow: 0 2px 8px #17741014; text-align: center; }
+    .confirmation-card h1 { color: var(--accent); margin-top: 0; font-size: 2.5em; }
+    .confirmation-card p { font-size: 1.1em; margin-bottom: 15px; }
+    .confirmation-card .order-details { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: left; }
+    .confirmation-card .order-details h3 { color: #33823d; margin-bottom: 15px; }
+    .confirmation-card .order-details p { margin-bottom: 8px; }
+    .confirmation-card .button-group { margin-top: 30px; }
+    .confirmation-card .button-group a { background:#408a46;color:#fff;text-decoration:none;padding:12px 25px;border-radius:9px;font-size:1.1em;font-weight:600; margin: 0 10px; display: inline-block; }
+    .confirmation-card .button-group a:hover { background: #336d38; }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <div class="confirmation-card">
+      <h1>Order Confirmed!</h1>
+      <p>Thank you for your purchase. Your order has been successfully placed.</p>
+      <p>Your order number is: <strong>#AGRO123456</strong></p>
+      <p>You will receive an email confirmation shortly with details of your order.</p>
+
+      <div class="order-details">
+        <h3>Order Summary</h3>
+        <p><strong>Product A:</strong> 1 unit</p>
+        <p><strong>Product B:</strong> 2 units</p>
+        <p><strong>Total:</strong> $XX.XX</p>
+        <p><strong>Shipping Address:</strong> 123 Farm Lane, Agri-City, AG 12345</p>
+      </div>
+
+      <div class="button-group">
+        <a href="/pages/consumer/orders.html">View My Orders</a>
+        <a href="/pages/consumer/catalog.html">Continue Shopping</a>
+      </div>
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!protectPage('consumer')) return;
+      await loadUserDataForConsumer();
+      // Logic to display actual order details based on session or URL parameters
+    });
+  </script>
+</body>
+</html>

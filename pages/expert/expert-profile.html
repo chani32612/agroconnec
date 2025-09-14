@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Expert Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; } 
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .profile-card { background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 2px 8px #17741014; margin-top: 20px; text-align: center; }
+    .profile-card h1 { margin-top: 0; color: var(--green); }
+    .profile-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 4px solid var(--accent); }
+    .profile-info p { font-size: 1.1em; line-height: 1.6; margin-bottom: 10px; }
+    .profile-info strong { color: var(--accent); }
+    .articles-section { margin-top: 40px; text-align: left; }
+    .articles-section h2 { color: var(--green); border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 20px; }
+    .article-list { list-style: none; padding: 0; }
+    .article-list li { background: #fff; margin-bottom: 15px; padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px #17741014; }
+    .article-list li h3 { margin-top: 0; color: var(--green); }
+    .article-list li p { font-size: 0.95em; color: #555; }
+    .article-list li a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .article-list li a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <div class="profile-card">
+      <img src="https://via.placeholder.com/150" alt="Expert Avatar" class="profile-avatar">
+      <h1>Dr. Emily White</h1>
+      <div class="profile-info">
+        <p><strong>Specialty:</strong> Sustainable Agriculture, Soil Science</p>
+        <p><strong>About:</strong> Dr. Emily White is an agricultural expert with a Ph.D. in Agronomy. She specializes in sustainable farming practices, soil health, and crop optimization. She is passionate about sharing knowledge to help farmers thrive.</p>
+        <p><strong>Contact:</strong> emily.white@example.com</p>
+      </div>
+    </div>
+
+    <div class="articles-section">
+      <h2>Published Articles</h2>
+      <ul class="article-list">
+        <li>
+          <h3>The Importance of Crop Rotation for Soil Health</h3>
+          <p>An in-depth look at how rotating crops can significantly improve soil fertility and reduce pest issues.</p>
+          <a href="#">Read More</a>
+        </li>
+        <li>
+          <h3>Understanding Organic Fertilizers: A Comprehensive Guide</h3>
+          <p>Explore the benefits and application of various organic fertilizers for healthier crops.</p>
+          <a href="#">Read More</a>
+        </li>
+        <li>
+          <h3>Water Management Techniques for Drought-Prone Regions</h3>
+          <p>Practical strategies for efficient water usage in agriculture during dry spells.</p>
+          <a href="#">Read More</a>
+        </li>
+      </ul>
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      // This page is public, so no protectPage call needed unless specific expert data is loaded
+      // If dynamic expert data is to be loaded based on URL, you'd fetch it here
+      // Example: const urlParams = new URLSearchParams(window.location.search);
+      // const expertId = urlParams.get('id');
+      // if (expertId) { fetchExpertData(expertId); }
+    });
+  </script>
+</body>
+</html>

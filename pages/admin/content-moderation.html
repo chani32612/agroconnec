@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroConnect – Content Moderation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="/auth.js"></script>
+  <script src="/components/components.js" defer></script>
+  <style>
+    :root { --green:#375432; --accent:#36b94a; --bg:#f7f6ea; } 
+    body { margin:0; font-family:'Georgia', serif; background:var(--bg); color:var(--green);}
+    .container { max-width:1200px; margin:20px auto; padding:0 20px; }
+    .admin-card { background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 2px 8px #17741014; margin-top: 20px; }
+    .admin-card h1 { margin-top: 0; color: var(--green); }
+    .moderation-item { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+    .moderation-item h3 { margin-top: 0; color: var(--green); }
+    .moderation-item p { font-size: 0.95em; line-height: 1.5; }
+    .moderation-item .meta { font-size: 0.85em; color: #777; margin-bottom: 10px; }
+    .moderation-actions button { background: #408a46; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 0.9em; margin-right: 10px; }
+    .moderation-actions button.reject { background: #dc3545; }
+    .moderation-actions button:hover { opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <div data-include="/components/header.html"></div>
+
+  <main class="container">
+    <div class="admin-card">
+      <h1>Content Moderation</h1>
+      
+      <div class="moderation-item">
+        <h3>Product Listing: Organic Blueberries</h3>
+        <p class="meta">Submitted by: Farmer Jane | Type: Product | Status: Pending</p>
+        <p>Description: "Freshly picked organic blueberries, sweet and juicy. Perfect for pies and smoothies."</p>
+        <div class="moderation-actions">
+          <button>Approve</button>
+          <button class="reject">Reject</button>
+          <button>Edit</button>
+        </div>
+      </div>
+
+      <div class="moderation-item">
+        <h3>Article: Benefits of Composting</h3>
+        <p class="meta">Submitted by: Dr. Emily White | Type: Article | Status: Pending</p>
+        <p>Content: "Composting is a great way to enrich your soil and reduce waste..."</p>
+        <div class="moderation-actions">
+          <button>Approve</button>
+          <button class="reject">Reject</button>
+          <button>Edit</button>
+        </div>
+      </div>
+
+      <div class="moderation-item">
+        <h3>Product Review: "Great Apples!"</h3>
+        <p class="meta">Submitted by: Consumer Chris | Type: Review | Status: Pending</p>
+        <p>Review: "These apples were incredibly fresh and delicious. Highly recommend!"</p>
+        <div class="moderation-actions">
+          <button>Approve</button>
+          <button class="reject">Reject</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div data-include="/components/footer.html"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (!protectPage('admin')) return;
+      await loadUserDataForAdmin();
+      // In a real application, fetch and display actual content for moderation here
+    });
+  </script>
+</body>
+</html>
